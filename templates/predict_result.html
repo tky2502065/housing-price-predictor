@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>予測結果</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="sheet">
+        <span class="corner-bl"></span><span class="corner-br"></span>
+
+        <div class="title-block">
+            <p class="eyebrow">HOUSING PRICE ESTIMATOR / 予測結果</p>
+            <h1>{{ ward }} {{ district }}</h1>
+        </div>
+
+        <div class="result-body">
+            {% if warning %}
+            <div class="warning">⚠ {{ warning }}</div>
+            {% endif %}
+
+            <div class="price-block">
+                <p class="price-label">予測売買価格</p>
+                <div class="price-value">約{{ "{:,.0f}".format(price) }}<span>円</span></div>
+            </div>
+
+            <table class="spec-table">
+                <tr><td>区</td><td>{{ ward }}</td></tr>
+                <tr><td>地区</td><td>{{ district }}</td></tr>
+                <tr><td>土地面積</td><td>{{ land_area }} ㎡</td></tr>
+                <tr><td>延床面積</td><td>{{ floor_area }} ㎡</td></tr>
+                <tr><td>築年数</td><td>{{ building_age }} 年</td></tr>
+                <tr><td>最寄駅まで</td><td>{{ station_minutes }} 分</td></tr>
+            </table>
+
+            <a href="{{ url_for('predict_form') }}" class="back-link">別の条件で予測する →</a>
+        </div>
+    </div>
+</body>
+</html>

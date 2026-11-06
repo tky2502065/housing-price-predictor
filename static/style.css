@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+:root {
+  --paper: #F7F4EE;
+  --ink: #1B2A41;
+  --ink-soft: #5B6B7F;
+  --line: #C9CDD3;
+  --blue: #2F5D8A;
+  --blue-deep: #1B3A5C;
+  --alert: #B3411E;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: -1px -1px;
+  color: var(--ink);
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 48px 20px;
+}
+
+.sheet {
+  background: #FFFFFF;
+  border: 1.5px solid var(--ink);
+  max-width: 560px;
+  width: 100%;
+  position: relative;
+  box-shadow: 6px 6px 0 rgba(27, 42, 65, 0.08);
+}
+
+/* 図面の隅の基準マーク */
+.sheet::before, .sheet::after,
+.sheet .corner-br, .sheet .corner-bl {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid var(--blue);
+}
+.sheet::before { top: -1.5px; left: -1.5px; border-right: none; border-bottom: none; }
+.sheet::after { top: -1.5px; right: -1.5px; border-left: none; border-bottom: none; }
+.sheet .corner-bl { bottom: -1.5px; left: -1.5px; border-right: none; border-top: none; }
+.sheet .corner-br { bottom: -1.5px; right: -1.5px; border-left: none; border-top: none; }
+
+.title-block {
+  padding: 28px 36px 22px;
+  border-bottom: 1.5px solid var(--ink);
+}
+
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--blue);
+  margin: 0 0 6px;
+}
+
+h1 {
+  font-family: 'Zen Old Mincho', serif;
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.dim-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 36px;
+  margin: 22px 0 18px;
+}
+.dim-divider::before, .dim-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+  position: relative;
+}
+.dim-divider::before { margin-left: -2px; }
+.dim-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+form, .result-body { padding: 0 36px 32px; }
+
+.field { margin-bottom: 18px; }
+
+label {
+  display: block;
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+input[type="text"], input[type="number"], select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  border-radius: 0;
+  transition: border-color 0.15s;
+}
+select { font-family: 'Zen Kaku Gothic New', sans-serif; }
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--blue);
+  background: #fff;
+}
+
+.row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+button, .btn {
+  width: 100%;
+  padding: 13px;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: background 0.15s;
+}
+button:hover, .btn:hover { background: var(--blue-deep); }
+
+/* --- 結果ページ --- */
+.price-block {
+  text-align: center;
+  padding: 30px 0 26px;
+  border-bottom: 1px dashed var(--line);
+  margin-bottom: 22px;
+}
+.price-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+}
+.price-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 40px;
+  font-weight: 600;
+  color: var(--blue-deep);
+}
+.price-value span { font-size: 20px; margin-left: 4px; color: var(--ink-soft); }
+
+.spec-table { width: 100%; border-collapse: collapse; }
+.spec-table tr { border-bottom: 1px solid var(--line); }
+.spec-table tr:last-child { border-bottom: none; }
+.spec-table td { padding: 10px 0; font-size: 14px; }
+.spec-table td:first-child { color: var(--ink-soft); width: 40%; }
+.spec-table td:last-child { font-family: 'JetBrains Mono', monospace; font-weight: 500; text-align: right; }
+
+.warning {
+  background: #FBEEE8;
+  border: 1px solid var(--alert);
+  color: var(--alert);
+  font-size: 13px;
+  padding: 10px 14px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 8px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 24px;
+  font-size: 13px;
+  color: var(--blue);
+  text-decoration: none;
+  border-bottom: 1px solid var(--blue);
+}
+.back-link:hover { color: var(--blue-deep); border-color: var(--blue-deep); }

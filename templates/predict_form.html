@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>住宅価格予測</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="sheet">
+        <span class="corner-bl"></span><span class="corner-br"></span>
+
+        <div class="title-block">
+            <p class="eyebrow">HOUSING PRICE ESTIMATOR / 東京都</p>
+            <h1>住宅価格予測システム</h1>
+        </div>
+
+        <div class="dim-divider"><span class="dim-label">入力条件</span></div>
+
+        <form action="{{ url_for('predict') }}" method="POST">
+            <div class="row-2">
+                <div class="field">
+                    <label for="ward">区</label>
+                    <select id="ward" name="ward">
+                        {% for w in ward_list %}
+                        <option value="{{ w }}">{{ w }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="district">地区名(町名)</label>
+                    <select id="district" name="district" required></select>
+                </div>
+            </div>
+
+            <div class="row-2">
+                <div class="field">
+                    <label for="land_area">土地面積 (㎡)</label>
+                    <input type="number" step="0.1" id="land_area" name="land_area" required>
+                </div>
+                <div class="field">
+                    <label for="floor_area">延床面積 (㎡)</label>
+                    <input type="number" step="0.1" id="floor_area" name="floor_area" required>
+                </div>
+            </div>
+
+            <div class="row-2">
+                <div class="field">
+                    <label for="building_age">築年数 (年)</label>
+                    <input type="number" step="1" id="building_age" name="building_age" required>
+                </div>
+                <div class="field">
+                    <label for="station_minutes">最寄駅まで (分)</label>
+                    <input type="number" step="1" id="station_minutes" name="station_minutes" required>
+                </div>
+            </div>
+
+            <button type="submit">予測する</button>
+        </form>
+    </div>
+    <script>
+        const districtByWard = {{ district_by_ward | tojson }};
+        const wardSelect = document.getElementById("ward");
+        const districtSelect = document.getElementById("district");
+
+        function populateDistricts() {
+            const districts = districtByWard[wardSelect.value] || [];
+            districtSelect.innerHTML = districts
+                .map(d => `<option value="${d}">${d}</option>`)
+                .join("");
+        }
+        wardSelect.addEventListener("change", populateDistricts);
+        populateDistricts();
+    </script>
+</body>
+</html>
